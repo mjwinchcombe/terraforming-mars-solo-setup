@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "target": "es2015",
+        "outDir": "dist",
+        "sourceMap": true,
+        "module": "commonjs"
+    }
+}
