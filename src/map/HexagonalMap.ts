@@ -1,6 +1,6 @@
 import { Hex, HexEdges } from "./Hex"
 
-class HexagonalHexesValidator<T> {
+class HexagonalHexesValidator<H extends Hex<any>> {
 
     private increasing: boolean = true
     private currentRowNumber: number = 0
@@ -8,7 +8,7 @@ class HexagonalHexesValidator<T> {
     private nextRowLength: number
     private rowLengthDifference: number
 
-    constructor(readonly hexes: Hex<T>[][]) {
+    constructor(readonly hexes: H[][]) {
     }
 
     validate(): void {
@@ -57,14 +57,14 @@ class HexagonalHexesValidator<T> {
     }
 }
 
-export class HexagonalMap<T> {
-    static buildFrom2dArray<T>(array: Hex<T>[][]): HexagonalMap<T> {
+export class HexagonalMap<H extends Hex<any>> {
+    static buildFrom2dArray<H extends Hex<any>>(array: H[][]): HexagonalMap<H> {
         return new HexagonalMap(array)
     }
 
-    readonly _hexes: Hex<T>[][];
+    readonly _hexes: H[][];
 
-    protected constructor(hexes: Hex<T>[][]) {
+    protected constructor(hexes: H[][]) {
         this._hexes = hexes
         this.validateHexesDesribeHexagonalMap()
         this.connectRows();
@@ -82,7 +82,7 @@ export class HexagonalMap<T> {
         }
     }
 
-    private connectHexesInRow(row: Hex<T>[]): void {
+    private connectHexesInRow(row: H[]): void {
         const lastConnectableHexNumber = this.getLastConnectableHexNumber(row)
         for (let hexNumber = 0; hexNumber <= lastConnectableHexNumber; hexNumber++) {
             let hex = row[hexNumber];
@@ -91,11 +91,11 @@ export class HexagonalMap<T> {
         }
     }
 
-    private getLastConnectableHexNumber(row: Hex<T>[]): number {
+    private getLastConnectableHexNumber(row: H[]): number {
         return row.length - 2;
     }
 
-    private connectHexesToNextRow(row: Hex<T>[], rowNumber: number): void {
+    private connectHexesToNextRow(row: H[], rowNumber: number): void {
         if (this.isSecondToLastRow(rowNumber)) {
             return;
         }
@@ -111,11 +111,11 @@ export class HexagonalMap<T> {
         return rowNumber >= this._hexes.length - 1
     }
 
-    private isNextRowLarger(row: Hex<T>[], nextRow: Hex<T>[]): boolean {
+    private isNextRowLarger(row: H[], nextRow: H[]): boolean {
         return nextRow.length > row.length
     }
 
-    private connectToLargerRow(row: Hex<T>[], rowToConnectTo: Hex<T>[]) {
+    private connectToLargerRow(row: H[], rowToConnectTo: H[]) {
         for (let hexNumber = 0; hexNumber < row.length; hexNumber++) {
             let hex = row[hexNumber]
             let hexForBottomLeft = rowToConnectTo[hexNumber]
@@ -125,7 +125,7 @@ export class HexagonalMap<T> {
         }
     }
 
-    private connectToSmallerRow(row: Hex<T>[], rowToConnectTo: Hex<T>[]) {
+    private connectToSmallerRow(row: H[], rowToConnectTo: H[]) {
         for (let hexNumber = 0; hexNumber < row.length; hexNumber++) {
             let hex = row[hexNumber]
             
@@ -141,14 +141,14 @@ export class HexagonalMap<T> {
         }
     }
 
-    getHexAt(row: number, column: number) { 
+    getHexAt(row: number, column: number): H { 
         if (this.isHexAt(row, column)) {
             return this._hexes[row][column]
         }
         throw Error(`No hex at row ${row} column ${column}`)
     }
 
-    isHexAt(rowNumber: number, columnNumber: number) {
+    isHexAt(rowNumber: number, columnNumber: number): boolean {
         if (rowNumber < this._hexes.length) {
             let row = this._hexes[rowNumber]
             return columnNumber < row.length

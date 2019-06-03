@@ -32,16 +32,16 @@ describe("HexagonalMap", () => {
             })
 
             it("then left hex is connected to middle hex", () => {
-                leftHex.connectedAt(HexEdges.MIDDLE_RIGHT).should.equal(middleHex)
+                leftHex.getHexConnectedAt(HexEdges.MIDDLE_RIGHT).should.equal(middleHex)
             })
 
             it("then middle hex is connected to left and right hexes", () => {
-                middleHex.connectedAt(HexEdges.MIDDLE_LEFT).should.equal(leftHex)
-                middleHex.connectedAt(HexEdges.MIDDLE_RIGHT).should.equal(rightHex)
+                middleHex.getHexConnectedAt(HexEdges.MIDDLE_LEFT).should.equal(leftHex)
+                middleHex.getHexConnectedAt(HexEdges.MIDDLE_RIGHT).should.equal(rightHex)
             })
 
             it("that right hex is connected to middle hex", () => {
-                rightHex.connectedAt(HexEdges.MIDDLE_LEFT).should.equal(middleHex)
+                rightHex.getHexConnectedAt(HexEdges.MIDDLE_LEFT).should.equal(middleHex)
             })
         })
 
@@ -62,13 +62,13 @@ describe("HexagonalMap", () => {
             })
 
             it("then top hex is connected to both middle hexes", () => {
-                topHex.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(middleLeftHex)
-                topHex.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(middleRightHex)
+                topHex.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(middleLeftHex)
+                topHex.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(middleRightHex)
             })
 
             it("then both middle hexes are connected to top hex", () => {
-                middleLeftHex.connectedAt(HexEdges.TOP_RIGHT).should.equal(topHex)
-                middleRightHex.connectedAt(HexEdges.TOP_LEFT).should.equal(topHex)
+                middleLeftHex.getHexConnectedAt(HexEdges.TOP_RIGHT).should.equal(topHex)
+                middleRightHex.getHexConnectedAt(HexEdges.TOP_LEFT).should.equal(topHex)
             })
         })
     }) 
@@ -93,15 +93,15 @@ describe("HexagonalMap", () => {
         })
 
         it("then top hex is connected to both middle hexes", () => {
-            topHex.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(middleLeftHex)
-            topHex.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(middleRightHex)
+            topHex.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(middleLeftHex)
+            topHex.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(middleRightHex)
         })
 
         it("then both middle hexes are connected to top and bottom hexes", () => {
-            middleLeftHex.connectedAt(HexEdges.TOP_RIGHT).should.equal(topHex)
-            middleLeftHex.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(bottomHex)
-            middleRightHex.connectedAt(HexEdges.TOP_LEFT).should.equal(topHex)
-            middleRightHex.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(bottomHex)
+            middleLeftHex.getHexConnectedAt(HexEdges.TOP_RIGHT).should.equal(topHex)
+            middleLeftHex.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(bottomHex)
+            middleRightHex.getHexConnectedAt(HexEdges.TOP_LEFT).should.equal(topHex)
+            middleRightHex.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(bottomHex)
         })
     })
 
@@ -122,8 +122,8 @@ describe("HexagonalMap", () => {
         })
 
         it("then both top hexes are connected to the bottom hex", () => {
-            topLeftHex.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(bottomHex)
-            topRightHex.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(bottomHex)
+            topLeftHex.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(bottomHex)
+            topRightHex.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(bottomHex)
         })
     })
 
@@ -157,7 +157,7 @@ describe("HexagonalMap", () => {
     })
 
     describe("when getting a tile that does not exist", () => {
-        let map: HexagonalMap<Tile>
+        let map: HexagonalMap<Hex<Tile>>
 
         beforeEach(() => {
             let hexes: Hex<Tile>[][] = []

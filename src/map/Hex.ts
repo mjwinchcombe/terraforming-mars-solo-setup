@@ -40,11 +40,19 @@ export class Hex<T extends Tile> {
         hex._connectedHexes[OPPOSITE_EDGES[edge]] = this
     }
 
-    connectedAt(edge: HexEdges): Hex<T> {
+    getHexConnectedAt(edge: HexEdges): Hex<T> {
         let hex = this._connectedHexes[edge]
         if (!hex) {
             throw Error("No hex connected to edge " + HexEdges[edge])
         }
         return hex; 
+    }
+
+    isHexConnectedAt(edge: HexEdges): boolean {
+        let hex = this._connectedHexes[edge]
+        if (hex) {
+            return true;
+        }
+        return false
     }
 }

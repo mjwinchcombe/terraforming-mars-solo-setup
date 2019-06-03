@@ -32,47 +32,53 @@ describe("Hex", () => {
         it("then a tile be can connect to middle right", () => {
             hex.connectHex(hexToConnect, HexEdges.MIDDLE_RIGHT)
 
-            hex.connectedAt(HexEdges.MIDDLE_RIGHT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.MIDDLE_LEFT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.MIDDLE_RIGHT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.MIDDLE_RIGHT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.MIDDLE_LEFT).should.equal(hex)
         })
 
         it("then a tile be can connect to bottom right", () => {
             hex.connectHex(hexToConnect, HexEdges.BOTTOM_RIGHT)
 
-            hex.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.TOP_LEFT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.TOP_LEFT).should.equal(hex)
         })
 
         it("then a tile be can connect to bottom left", () => {
             hex.connectHex(hexToConnect, HexEdges.BOTTOM_LEFT)
 
-            hex.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.TOP_RIGHT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.BOTTOM_LEFT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.TOP_RIGHT).should.equal(hex)
         })
 
         it("then a tile be can connect to middle left", () => {
             hex.connectHex(hexToConnect, HexEdges.MIDDLE_LEFT)
 
-            hex.connectedAt(HexEdges.MIDDLE_LEFT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.MIDDLE_RIGHT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.MIDDLE_LEFT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.MIDDLE_LEFT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.MIDDLE_RIGHT).should.equal(hex)
         })
 
         it("then a tile be can connect to top left", () => {
             hex.connectHex(hexToConnect, HexEdges.TOP_LEFT)
 
-            hex.connectedAt(HexEdges.TOP_LEFT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.BOTTOM_RIGHT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.TOP_LEFT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.TOP_LEFT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.BOTTOM_RIGHT).should.equal(hex)
         })
 
         it("then a tile be can connect to top right", () => {
             hex.connectHex(hexToConnect, HexEdges.TOP_RIGHT)
 
-            hex.connectedAt(HexEdges.TOP_RIGHT).should.equal(hexToConnect)
-            hexToConnect.connectedAt(HexEdges.BOTTOM_LEFT).should.equal(hex)
+            hex.isHexConnectedAt(HexEdges.TOP_RIGHT).should.be.true()
+            hex.getHexConnectedAt(HexEdges.TOP_RIGHT).should.equal(hexToConnect)
+            hexToConnect.getHexConnectedAt(HexEdges.BOTTOM_LEFT).should.equal(hex)
         })
     })
 
     it ("when getting an unconnected tile then exception throw", () => {
-        should(() => hex.connectedAt(HexEdges.TOP_LEFT)).throw("No hex connected to edge TOP_LEFT");
+        should(() => hex.getHexConnectedAt(HexEdges.TOP_LEFT)).throw("No hex connected to edge TOP_LEFT");
     });
 })
