@@ -8,13 +8,13 @@ export class SoloSetupGreeneryPlacement {
     readonly STARTING_HEX = HexEdges.TOP_LEFT
     readonly ENDING_HEX = HexEdges.MIDDLE_LEFT
     private currentPosition = this.STARTING_HEX
-    private cityHex: LandHex
+    private cityHex: MarsHex
     private count: number
     
-    constructor(readonly map: MarsMap) {
+    constructor() {
     }
 
-    placeGreenery(cityHex: LandHex, count: number) {
+    placeGreenery(cityHex: MarsHex, count: number) {
         this.cityHex = cityHex
         this.count = count
         this.validateInput()

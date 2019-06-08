@@ -7,6 +7,16 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/.bin/mocha",
+            "args": [
+                "dist/test/**"
+            ],
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/index.js",
             "preLaunchTask": "tsc: build - tsconfig.json",

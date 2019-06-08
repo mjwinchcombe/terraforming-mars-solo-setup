@@ -20,9 +20,8 @@ describe("SoloSetupGreeneryPlacement", () => {
 
         beforeEach(() => {
             map = buildMarsMapFromString(mapString);
-            greeneryPlacement = new SoloSetupGreeneryPlacement(map)
-            cityHex = map.getHexAt(1, 1)
-            cityHex.placeTile(new CityTile())
+            greeneryPlacement = new SoloSetupGreeneryPlacement()
+            cityHex = <LandHex> map.getHexAt(1, 1)
         })
         it("and count is 1 then greenery is placed on top left hex", () => {
             greeneryPlacement.placeGreenery(cityHex, 1)
@@ -76,9 +75,8 @@ describe("SoloSetupGreeneryPlacement", () => {
         const COUNT_FOR_NOCTIS_CITY_HEX = 3
         beforeEach(() => {
             map = buildMarsMapFromString(mapString);
-            greeneryPlacement = new SoloSetupGreeneryPlacement(map)
-            cityHex = map.getHexAt(1, 1)
-            cityHex.placeTile(new CityTile())
+            greeneryPlacement = new SoloSetupGreeneryPlacement()
+            cityHex = <LandHex> map.getHexAt(1, 1)
         })
 
         it("and count would place greenery on water then next available hex (clockwise) is used", () =>{
@@ -102,10 +100,10 @@ describe("SoloSetupGreeneryPlacement", () => {
                               W W`
         beforeEach(() => {
             map = buildMarsMapFromString(mapString);
-            greeneryPlacement = new SoloSetupGreeneryPlacement(map)
-            cityHex = map.getHexAt(1, 1)
-            cityHex.placeTile(new CityTile())
+            greeneryPlacement = new SoloSetupGreeneryPlacement()
+            cityHex = <LandHex> map.getHexAt(1, 1)
         })
+
         it("then an error is thrown", () => {
             should(() => greeneryPlacement.placeGreenery(cityHex, 1))
                 .throw("Greenery cannot be placed around this city")
@@ -118,9 +116,8 @@ describe("SoloSetupGreeneryPlacement", () => {
                               L W`
         beforeEach(() => {
             map = buildMarsMapFromString(mapString);
-            greeneryPlacement = new SoloSetupGreeneryPlacement(map)
-            cityHex = map.getHexAt(1, 0)
-            cityHex.placeTile(new CityTile())
+            greeneryPlacement = new SoloSetupGreeneryPlacement()
+            cityHex = <LandHex> map.getHexAt(1, 0)
         })
 
         it("and greenery would be placed off the map then the next available hex is used", () => {
@@ -137,9 +134,8 @@ describe("SoloSetupGreeneryPlacement", () => {
                               L L`
         beforeEach(() => {
             map = buildMarsMapFromString(mapString);
-            greeneryPlacement = new SoloSetupGreeneryPlacement(map)
-            cityHex = map.getHexAt(1, 0)
-            cityHex.placeTile(new CityTile())
+            greeneryPlacement = new SoloSetupGreeneryPlacement()
+            cityHex = <LandHex> map.getHexAt(1, 0)
         })
         
         it("count value is 0 then error thrown", () => {
@@ -148,13 +144,13 @@ describe("SoloSetupGreeneryPlacement", () => {
         })
 
         it("city hex is empty then error is thrown", () => {
-            let hexWithoutCity = map.getHexAt(0, 0)
+            let hexWithoutCity = <LandHex> map.getHexAt(0, 0)
             should(() => greeneryPlacement.placeGreenery(hexWithoutCity, 1))
                 .throw("city hex must contain a city")
         })
 
         it("city hex doesn't contain city then error is thrown", () => {
-            let hex = map.getHexAt(0, 0)
+            let hex = <LandHex> map.getHexAt(0, 0)
             hex.placeTile(new GreeneryTile())
             should(() => greeneryPlacement.placeGreenery(hex, 1))
                 .throw("city hex must contain a city")
@@ -166,5 +162,4 @@ describe("SoloSetupGreeneryPlacement", () => {
                 .throw("city hex must be provided")
         })
     })
-    
 })

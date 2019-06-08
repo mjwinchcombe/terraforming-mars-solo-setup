@@ -25,6 +25,15 @@ describe("LandHex", () => {
             landHex.placeTile(greeneryTile)
             landHex.getTile().should.be.equal(greeneryTile)
         })
+
+        it("and another tile is placed then second tile cannot be placed", () => {
+            let cityTile = new CityTile
+            let greeneryTile = new GreeneryTile
+            landHex.canTileBePlaced(cityTile).should.be.true()
+            landHex.placeTile(cityTile)
+            landHex.canTileBePlaced(greeneryTile).should.be.false()
+            should(() => landHex.placeTile(greeneryTile)).throw("tile already placed")  
+        })
     })
 })
 

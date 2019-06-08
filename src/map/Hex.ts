@@ -28,7 +28,22 @@ export class Hex<T extends Tile> {
     }
 
     placeTile(tile: T) {
+        let placementError = this.getTilePlacementError(tile)
+        if (placementError) {
+            throw placementError
+        }
         this._tile = tile
+    }
+
+    canTileBePlaced(tile: T): boolean {
+        return !this.getTilePlacementError(tile)
+    }
+
+    protected getTilePlacementError(tile: T): Error {
+        if (this._tile) {
+            return Error("tile already placed") 
+        }
+        return null
     }
 
     getTile(): T {

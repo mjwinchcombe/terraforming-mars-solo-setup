@@ -1,22 +1,23 @@
 import { Hex } from "../map/Hex";
 import { MarsTile } from "./MarsTiles";
+import { Tile } from "../map/Tile";
 
 export abstract class MarsHex extends Hex<MarsTile> {
-    abstract canTileBePlaced(tile: MarsTile): boolean
     abstract name(): string
 
-    placeTile(tile: MarsTile) {
-        if (this.canTileBePlaced(tile)) {
-            super.placeTile(tile)
-        } else {
-            throw Error(`Cannot place a ${tile.name()} on ${this.name()}`)
-        }
+    protected createTilePlacementErrorMessage(tile: MarsTile): string { 
+        return `Cannot place a ${tile.name()} on ${this.name()}`
     }
 }
 
 export class LandHex extends MarsHex {
-    canTileBePlaced(tile: MarsTile): boolean {
-        return tile.canBePlacedOnLand();
+
+    protected getTilePlacementError(tile: MarsTile): Error {
+        if (!tile.canBePlacedOnLand) {
+            return Error(this.createTilePlacementErrorMessage(tile))
+        } else {
+            return super.getTilePlacementError(tile)
+        }
     }
 
     name(): string {
@@ -25,8 +26,12 @@ export class LandHex extends MarsHex {
 }
 
 export class WaterHex extends MarsHex {
-    canTileBePlaced(tile: MarsTile): boolean {
-        return tile.canBePlacedOnWater();
+    protected getTilePlacementError(tile: MarsTile): Error {
+        if (!tile.canBePlacedOnWater()) {
+            return new Error(this.createTilePlacementErrorMessage(tile))
+        } else {
+            return super.getTilePlacementError(tile)
+        }
     }
 
     name(): string {
@@ -35,8 +40,8 @@ export class WaterHex extends MarsHex {
 }
 
 export class NoctisCityHex extends MarsHex {  
-    canTileBePlaced(tile: MarsTile): boolean {
-        return false;
+    protected getTilePlacementError(tile: MarsTile): Error {
+        return new Error(this.createTilePlacementErrorMessage(tile))
     }
 
     name(): string {

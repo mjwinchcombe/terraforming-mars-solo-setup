@@ -20,6 +20,22 @@ describe("Hex", () => {
     
             hex.getTile().should.equal(tile)
         })
+
+        it("and a tile is already placed on the hex then tile cannot be placed", () => {
+            let tile1 = new Tile()
+            let tile2 = new Tile()
+            
+            hex.placeTile(tile1)
+            should(() => hex.placeTile(tile2)).throw("tile already placed")
+        })
+
+        it("and a tile is already placed on the hex then canTileBePlaced returns false", () => {
+            let tile1 = new Tile()
+            let tile2 = new Tile()
+            
+            hex.placeTile(tile1)
+            hex.canTileBePlaced(tile2).should.be.false()
+        })
     })
     
     describe("when connecting tiles", () => {

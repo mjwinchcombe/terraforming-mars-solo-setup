@@ -4,7 +4,7 @@ import { MarsHex } from "./MarsHexes";
 import { HexEdges } from "../map/Hex";
 
 abstract class CityHexFinder {
-    private currentHex
+    private currentHex: MarsHex
     
     constructor(readonly map: MarsMap, readonly hexEdgeToTry: HexEdges) {
         this.currentHex = this.getStartingHex()
@@ -85,15 +85,17 @@ export class SoloSetupCityPlacement {
     constructor(readonly map: MarsMap) {
     }
 
-    placeFirstCity(city: CityTile, hexCount: number): void {
+    placeFirstCity(city: CityTile, hexCount: number): MarsHex {
         let hexFinder = new FirstCityHexFinder(this.map)
         let hexForCity = hexFinder.findHexForCity(city, hexCount)
         hexForCity.placeTile(city)
+        return hexForCity
     }
 
-    placeSecondCity(city: CityTile, hexCount: number): void {
+    placeSecondCity(city: CityTile, hexCount: number): MarsHex {
         let hexFinder = new SecondCityHexFinder(this.map)
         let hexForCity = hexFinder.findHexForCity(city, hexCount)
         hexForCity.placeTile(city)
+        return hexForCity
     }
 }
