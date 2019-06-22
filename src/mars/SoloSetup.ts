@@ -50,7 +50,6 @@ class SoloSetupBuilder {
         let cityPlacement = new SoloSetupCityPlacement(this.map)
         let firstCityHex = cityPlacement.placeFirstCity(new CityTile(), sumOfCardValues)
         let secondCityHex = cityPlacement.placeSecondCity(new CityTile(), sumOfCardValues)
-        //Note greeneries are placed after both cities
         this.placeGreenery(firstCityHex, sumOfCardValues)
         this.placeGreenery(secondCityHex, sumOfCardValues)
     }
