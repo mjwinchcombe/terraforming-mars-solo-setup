@@ -15,7 +15,7 @@
     "mocha": "^6.1.4"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tslint -c tslint.json 'src/**/*.ts' 'test/**/*.js' && tsc",
     "pretest": "npm run-script build",
     "test": "mocha dist/test/** --reporter min"
   },

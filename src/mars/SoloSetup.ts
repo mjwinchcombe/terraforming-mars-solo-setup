@@ -1,61 +1,61 @@
+import { SoloSetupCityPlacement } from "./cityplacement/SoloCityPlacement";
+import { MarsHex } from "./MarsHex";
 import { MarsMap } from "./MarsMaps";
-import { SoloSetupCityPlacement } from "./SoloSetupCityPlacement";
-import { CityTile } from "./MarsTiles";
 import { SoloSetupGreeneryPlacement } from "./SoloSetupGreeneryPlacement";
-import { MarsHex } from "./MarsHexes";
+import { CityTile } from "./tiles/CityTile";
 
 export function SoloSetup() {
-    return new SoloSetupBuilder()
+    return new SoloSetupBuilder();
 }
 
 class SoloSetupBuilder {
 
-    readonly REQUIRED_NUMBER_OF_CARD_VALUES = 4
-    private map: MarsMap
-    private cardValues: number[] = []
+    public readonly REQUIRED_NUMBER_OF_CARD_VALUES = 4;
+    private map: MarsMap;
+    private cardValues: number[] = [];
 
-    withMap(map: MarsMap): SoloSetupBuilder {
-        this.map = map
-        return this
+    public withMap(map: MarsMap): SoloSetupBuilder {
+        this.map = map;
+        return this;
     }
 
-    addCardValue(cardValue: number): SoloSetupBuilder {
+    public addCardValue(cardValue: number): SoloSetupBuilder {
         if (this.cardValues.length < this.REQUIRED_NUMBER_OF_CARD_VALUES) {
             this.cardValues.push(cardValue);
         } else {
-            throw Error(`Maximum of ${this.REQUIRED_NUMBER_OF_CARD_VALUES} card values allowed`)
+            throw Error(`Maximum of ${this.REQUIRED_NUMBER_OF_CARD_VALUES} card values allowed`);
         }
-        return this
+        return this;
     }
 
-    setup(): MarsMap {
+    public setup(): MarsMap {
         if (!this.map) {
-            throw Error("A map must be specified")
+            throw Error("A map must be specified");
         }
         if (this.cardValues.length < this.REQUIRED_NUMBER_OF_CARD_VALUES) {
-            throw Error(`${this.REQUIRED_NUMBER_OF_CARD_VALUES} card values must be specified`)
+            throw Error(`${this.REQUIRED_NUMBER_OF_CARD_VALUES} card values must be specified`);
         }
-        let sumOfCardValues = this.sumOfCardValues()
-        this.placeCities(sumOfCardValues)
+        const sumOfCardValues = this.sumOfCardValues();
+        this.placeCities(sumOfCardValues);
         return this.map;
     }
 
     private sumOfCardValues(): number {
-        let result = 0
-        this.cardValues.forEach((cardValue) => result += cardValue)
-        return result
+        let result = 0;
+        this.cardValues.forEach((cardValue) => result += cardValue);
+        return result;
     }
-    
+
     private placeCities(sumOfCardValues: number): void {
-        let cityPlacement = new SoloSetupCityPlacement(this.map)
-        let firstCityHex = cityPlacement.placeFirstCity(new CityTile(), sumOfCardValues)
-        let secondCityHex = cityPlacement.placeSecondCity(new CityTile(), sumOfCardValues)
-        this.placeGreenery(firstCityHex, sumOfCardValues)
-        this.placeGreenery(secondCityHex, sumOfCardValues)
+        const cityPlacement = new SoloSetupCityPlacement(this.map);
+        const firstCityHex = cityPlacement.placeFirstCity(new CityTile(), sumOfCardValues);
+        const secondCityHex = cityPlacement.placeSecondCity(new CityTile(), sumOfCardValues);
+        this.placeGreenery(firstCityHex, sumOfCardValues);
+        this.placeGreenery(secondCityHex, sumOfCardValues);
     }
 
     private placeGreenery(cityHex: MarsHex, sumOfCardValues: number): void {
-        let greeneryPlacement = new SoloSetupGreeneryPlacement()
-        greeneryPlacement.placeGreenery(cityHex, sumOfCardValues)
+        const greeneryPlacement = new SoloSetupGreeneryPlacement();
+        greeneryPlacement.placeGreenery(cityHex, sumOfCardValues);
     }
 }

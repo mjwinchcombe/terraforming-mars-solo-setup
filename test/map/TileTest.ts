@@ -6,7 +6,7 @@ describe("Tile", () => {
     let tile: Tile
 
     beforeEach(() => {
-        tile = new Tile
+        tile = new Tile()
     })
 
     
